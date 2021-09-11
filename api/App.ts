@@ -26,6 +26,7 @@ class App {
 
   private callRouters() {
     this.app.use('/users', this.controllers.UsersController.router);
+    this.app.use('/categories', this.controllers.CategoriesController.router);
   }
 
   private handleErrors() {

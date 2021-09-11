@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
 import Helpers from '../utils/Helpers';
 import { User } from '../database/models/User';
+import { Category } from '../database/models/Category';
 import { ITokenPayload } from '../Type';
 
 
@@ -47,7 +48,8 @@ class Middlewares {
     if (userExists) {
       return next({ status: 409, message: 'User already exists' });
     }
-  }
+    return next();
+  };
 
   public verifyUserInfos = async (
     req: Request,
@@ -71,6 +73,33 @@ class Middlewares {
     const { error } = this.helpers.verifyUserCredentialsJoi({ email, password });
     if (error) {
       return next({ status: 422, message: error.details[0].message });
+    }
+    return next();
+  };
+
+  public verifyCategoryInfo = async (
+    req: Request,
+    _res: Response,
+    next: NextFunction,
+  ) => {
+    const { body: { name } } = req;
+    const { error } = this.helpers.verifyCategoryInfoJoi({ name });
+    if (error) {
+      return next({ status: 422, message: error.details[0].message });
+    }
+    return next();
+  };
+
+  public verifyCategoryExists = async (
+    req: Request,
+    _res: Response,
+    next: NextFunction,
+  ) => {
+    const { body: { name } } = req;
+    const categoryRepository = getRepository(Category);
+    const userExists = await categoryRepository.findOne({ where: { name } });
+    if (userExists) {
+      return next({ status: 409, message: 'Category already exists' });
     }
     return next();
   }

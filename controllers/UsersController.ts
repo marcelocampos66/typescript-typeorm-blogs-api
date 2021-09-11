@@ -4,7 +4,7 @@ import { TUsersService } from '../Type';
 
 class UsersController extends Middlewares {
   public router: express.Router;
-  public service: TUsersService;
+  private service: TUsersService;
 
   constructor(UsersService: TUsersService) {
     super();
@@ -14,14 +14,14 @@ class UsersController extends Middlewares {
   }
   
   private initializeRoutes() {
-    this.router.post('/', [
-      this.verifyUserInfos,
-      this.verifyUserExists,
-      this.registerUser,
-    ]);
     this.router.post('/login', [
       this.verifyUserCredentials,
       this.login,
+    ]);
+    this.router.post('/register', [
+      this.verifyUserInfos,
+      this.verifyUserExists,
+      this.registerUser,
     ]);
     this.router.get('/', [
       this.validateJWT,
@@ -30,6 +30,14 @@ class UsersController extends Middlewares {
     this.router.get('/:id', [
       this.validateJWT,
       this.getUserById,
+    ]);
+    this.router.put('/self-update', [
+      this.validateJWT,
+      this.updateUser,
+    ]);
+    this.router.delete('/me', [
+      this.validateJWT,
+      this.deleteUser,
     ]);
   }
 
@@ -74,6 +82,30 @@ class UsersController extends Middlewares {
     const result = await this.service.getUserById(Number(id));
     if (!result) {
       return next({ status: 404, message: 'User does not exist' });
+    }
+    return res.status(200).json(result);
+  };
+
+  private updateUser = async (
+    req: Request,
+    res: Response,
+    _next: NextFunction,
+  ) => {
+    const { body: { name, email, password }, payload: { id } } = req;
+    const result = await this.service
+      .updateUserById(id, { name, email, password });
+    return res.status(200).json(result);
+  };
+
+  private deleteUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    const { payload: { id } } = req;
+    const result = await this.service.deleteUserById(id);
+    if (!result) {
+      return next({ status: 404, message: 'This category does not exist' });
     }
     return res.status(200).json(result);
   };
