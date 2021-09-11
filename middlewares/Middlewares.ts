@@ -4,6 +4,7 @@ import { getRepository } from 'typeorm';
 import Helpers from '../utils/Helpers';
 import { User } from '../database/models/User';
 import { Category } from '../database/models/Category';
+import { BlogPost } from '../database/models/BlogPost';
 import { ITokenPayload } from '../Type';
 
 
@@ -103,6 +104,37 @@ class Middlewares {
     }
     return next();
   }
+
+  public verifyPostInfos = async (
+    req: Request,
+    _res: Response,
+    next: NextFunction,
+  ) => {
+    const { body: { title, content, categoryIds } } = req;
+    const { error } = this.helpers.verifyPostInfosJoi(
+      { title, content, categoryIds },
+    );
+    if (error) {
+      return next({ status: 422, message: error.details[0].message });
+    }
+    return next();
+  };
+
+  public verifyCategoryIds = async (
+    req: Request,
+    _res: Response,
+    next: NextFunction,
+  ) => {
+    const { body: { categoryIds } } = req;
+    const categoryRepository = getRepository(Category);
+    const categories = await categoryRepository.find();
+    const ids = categories.map(({ id }) => id);
+    const result = categoryIds.every((id: number) => ids.includes(id));
+    if (!result) {
+      return next({ status: 400, message: 'Some "categoryIds" not found' });
+    }
+    return next();
+  };
 
 }
 

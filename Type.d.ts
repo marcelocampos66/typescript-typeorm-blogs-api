@@ -1,16 +1,21 @@
 import UsersController from './controllers/UsersController';
 import CategoriesController from './controllers/CategoriesController';
+import BlogPostsController from './controllers/BlogPostsController';
 import { UsersService } from './services/UsersService';
 import { CategoriesServices } from './services/CategoriesService';
+import { BlogPostsService } from './services/BlogPostsService';
 
 interface IControllers {
   UsersController: UsersController;
   CategoriesController: CategoriesController;
+  BlogPostsController: BlogPostsController;
 }
 
 type TUsersService = UsersService;
 
 type TCategoriesServices = CategoriesServices;
+
+type TBlogPostsService = BlogPostsService;
 
 interface IUser {
   name: string;
@@ -33,4 +38,10 @@ interface ITokenPayload {
 
 interface ICategory {
   name: string;
+}
+
+interface IPost {
+  title: string;
+  content: string;
+  categoryIds: Array<number>;
 }
