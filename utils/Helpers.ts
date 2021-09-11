@@ -1,6 +1,6 @@
 import joi from 'joi';
 import md5 from 'md5';
-import { IUser, ICredentials } from '../Type';
+import { IUser, ICredentials, ICategory } from '../Type';
 
 class Helpers {
 
@@ -21,6 +21,12 @@ class Helpers {
       email: joi.string().email().required(),
       password: joi.string().min(6).required(),
     }).validate(credentials)
+  );
+
+  public verifyCategoryInfoJoi = (infos: ICategory) => (
+    joi.object({
+      name: joi.string().min(3).required(),
+    }).validate(infos)
   );
 
 }

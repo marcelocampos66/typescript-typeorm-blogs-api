@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
-import typeorm, { getRepository } from "typeorm";
+import { getRepository } from "typeorm";
 import Helpers from '../utils/Helpers';
 import { User } from "../database/models/User";
 import { ICredentials, IUser } from "../Type";
@@ -55,6 +55,24 @@ export class UsersService {
     const user = await userRepository.findOne({ where: { id } });
     if (!user) return;
     return user;
+  }
+
+  public async updateUserById(id: number, newInfos: IUser) {
+    const userRepository = getRepository(User);
+    const { password, ...necessaryArgs } = newInfos;
+    const hashedPassword = this.helpers.hashPassword(password);
+    const newUserInfos = { ...necessaryArgs, password: hashedPassword };
+    await userRepository.update(id, newUserInfos);
+    const updatedUser = await userRepository.findOne({ where: { id } });
+    if (!updatedUser) return;
+    return updatedUser;
+  }
+
+  public async deleteUserById(id: number) {
+    const userRepository = getRepository(User);
+    const result = await userRepository.delete(id);
+    if (result.affected === 0) return;
+    return { message: 'User successfully deleted' };
   }
 
 }
