@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import errorMiddleware from '../middlewares/errorMiddleware';
 import { IControllers } from '../Type';
 
 class App {
@@ -24,16 +25,16 @@ class App {
   }
 
   private callRouters() {
-    this.app.use('/users', this.controllers.UserController.router);
+    this.app.use('/users', this.controllers.UsersController.router);
   }
 
   private handleErrors() {
-
+    this.app.use(errorMiddleware);
   }
 
   public startServer() {
     this.app.listen(this.port, () => {
-      console.log(`API online on port: ${this.port}`);
+      console.log(`🔥🐉 API online on port: ${this.port} 🐉🔥`);
     });
   }
 

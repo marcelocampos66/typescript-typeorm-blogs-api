@@ -1,5 +1,6 @@
-import UserController from "./UserController";
+import UsersController from "./UsersController";
+import UsersService from '../services/UsersService';
 
 export default {
-  UserController: new UserController(),
+  UsersController: new UsersController(UsersService),
 };
