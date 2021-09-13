@@ -22,8 +22,8 @@ export class User {
   @Column()
   password: string;
 
-  @OneToMany(() => BlogPost, (posts: BlogPost) => posts.userId)
-  @JoinColumn({ name: "posts", referencedColumnName: "userId" })
+  @OneToMany(() => BlogPost, (posts: BlogPost) => posts.user)
+  @JoinColumn({ name: "posts", referencedColumnName: "user" })
   posts: Array<BlogPost>;
 
 }

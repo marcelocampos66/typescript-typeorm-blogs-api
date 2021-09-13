@@ -1,5 +1,6 @@
 import joi from 'joi';
 import md5 from 'md5';
+import { Category } from '../database/models/Category';
 import { IUser, ICredentials, ICategory, IPost } from '../Type';
 
 class Helpers {
@@ -37,13 +38,18 @@ class Helpers {
     }).validate(postInfos)
   );
 
-  public postStructure = (id: number, infos: IPost) => {
+  public postStructure = (
+    id: number,
+    infos: IPost,
+    postCategories: Array<Category>,
+  ) => {
     const { categoryIds, ...otherInfos } = infos;
     return ({
       ...otherInfos,
-      userId: id,
+      user: id,
       published: new Date(),
       updated: new Date(),
+      categories: postCategories,
     });
   };
 

@@ -149,6 +149,26 @@ class Middlewares {
     return next();
   };
 
+  public verifyPostOwner = async (
+    req: Request,
+    _res: Response,
+    next: NextFunction,
+  ) => {
+    const { params: { id }, payload: { id: userId } } = req;
+    const postRepository = getRepository(BlogPost);
+    const post = await postRepository.findOne(
+      id,
+      { relations: ['categories', 'user'] },
+    );
+    if (!post) {
+      return next({ status: 404, message: 'Post not found' });
+    }
+    if (post?.user.id !== userId) {
+      return next({ status: 403, message: 'You cannot delete this post' });
+    }
+    return next();
+  };
+
 }
 
 export default Middlewares;

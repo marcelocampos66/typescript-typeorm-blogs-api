@@ -45,3 +45,8 @@ interface IPost {
   content: string;
   categoryIds: Array<number>;
 }
+
+interface IPostWithoutCategoryIds {
+  title: string;
+  content: string;
+}

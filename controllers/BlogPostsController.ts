@@ -29,6 +29,17 @@ class BlogPostsController extends Middlewares {
       this.verifyPostExists,
       this.getPostById,
     ]);
+    this.router.put('/:id', [
+      this.validateJWT,
+      this.verifyPostExists,
+      this.verifyPostOwner,
+      this.updatePostById,
+    ]);
+    this.router.delete('/:id', [
+      this.validateJWT,
+      this.verifyPostOwner,
+      this.deletePostById,
+    ]);
   }
 
   private registerPost = async (
@@ -41,7 +52,7 @@ class BlogPostsController extends Middlewares {
       id,
       { title, content, categoryIds },
     );
-    return res.status(200).json({ message: 'isso eh tudo pessoal!' });
+    return res.status(200).json(result);
   };
 
   private getAllPosts = async (
@@ -62,6 +73,32 @@ class BlogPostsController extends Middlewares {
     const result = await this.service.getPostById(Number(id));
     if (!result) {
       return next({ status: 404, message: 'No posts found' });
+    }
+    return res.status(200).json(result);
+  };
+
+  private updatePostById = async (
+    req: Request,
+    res: Response,
+    _next: NextFunction,
+  ) => {
+    const { body: { title, content }, params: { id } } = req;
+    const result = await this.service.updatePostById(
+      Number(id),
+      { title, content }
+    );
+    return res.status(200).json(result);
+  };
+
+  private deletePostById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    const { params: { id } } = req;
+    const result = await this.service.deletePostById(Number(id));
+    if (!result) {
+      return next({ status: 404, message: 'This post does not exist' });
     }
     return res.status(200).json(result);
   };

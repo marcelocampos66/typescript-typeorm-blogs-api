@@ -26,8 +26,8 @@ export class BlogPost {
 
   // @ManyToOne(() => User, (user: User) => user.id)
   @ManyToOne(() => User)
-  @JoinColumn({ name: "userId", referencedColumnName: "id" })
-  userId: User;
+  @JoinColumn({ name: "user", referencedColumnName: "id" })
+  user: User;
 
   @CreateDateColumn()
   published: Date;
@@ -35,10 +35,8 @@ export class BlogPost {
   @UpdateDateColumn()
   updated: Date;
 
-  @ManyToMany(() => Category, (category: Category) => category.id, {
-    cascade: true,
-  })
-  // @JoinTable()
+  @ManyToMany(() => Category, (categories: Category) => categories.id)
+  @JoinTable()
   categories: Array<Category>;
 
 }
