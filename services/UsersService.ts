@@ -52,7 +52,8 @@ export class UsersService {
 
   public async getUserById(id: number) {
     const userRepository = getRepository(User);
-    const user = await userRepository.findOne({ where: { id } });
+    // const user = await userRepository.findOne({ where: { id } });
+    const user = await userRepository.findOne(id, { relations: ['posts'] });
     if (!user) return;
     return user;
   }

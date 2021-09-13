@@ -20,6 +20,15 @@ class BlogPostsController extends Middlewares {
       this.verifyCategoryIds,
       this.registerPost,
     ]);
+    this.router.get('/', [
+      this.validateJWT,
+      this.getAllPosts,
+    ]);
+    this.router.get('/:id', [
+      this.validateJWT,
+      this.verifyPostExists,
+      this.getPostById,
+    ]);
   }
 
   private registerPost = async (
@@ -32,7 +41,29 @@ class BlogPostsController extends Middlewares {
       id,
       { title, content, categoryIds },
     );
-    return res.status(200).json({});
+    return res.status(200).json({ message: 'isso eh tudo pessoal!' });
+  };
+
+  private getAllPosts = async (
+    _req: Request,
+    res: Response,
+    _next: NextFunction,
+  ) => {
+    const result = await this.service.getAllPosts();
+    return res.status(200).json(result);
+  };
+
+  private getPostById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    const { params: { id } } = req;
+    const result = await this.service.getPostById(Number(id));
+    if (!result) {
+      return next({ status: 404, message: 'No posts found' });
+    }
+    return res.status(200).json(result);
   };
 
 }

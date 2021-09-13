@@ -1,13 +1,14 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
 import { BlogPost } from "./BlogPost";
 
-@Entity('categories')
+// @Entity('categories')
+@Entity()
 export class Category {
 
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column()
   name: string;
 
   @ManyToMany(() => BlogPost, (post: BlogPost) => post.categories)

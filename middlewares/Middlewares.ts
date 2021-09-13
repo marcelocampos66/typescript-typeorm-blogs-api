@@ -7,7 +7,6 @@ import { Category } from '../database/models/Category';
 import { BlogPost } from '../database/models/BlogPost';
 import { ITokenPayload } from '../Type';
 
-
 class Middlewares {
   private helpers: Helpers;
   private secret: jwt.Secret;
@@ -132,6 +131,20 @@ class Middlewares {
     const result = categoryIds.every((id: number) => ids.includes(id));
     if (!result) {
       return next({ status: 400, message: 'Some "categoryIds" not found' });
+    }
+    return next();
+  };
+
+  public verifyPostExists = async (
+    req: Request,
+    _res: Response,
+    next: NextFunction,
+  ) => {
+    const { params: { id } } = req;
+    const postRepository = getRepository(BlogPost);
+    const post = await postRepository.findOne({ where: { id } });
+    if (!post) {
+      return next({ status: 404, message: 'Post not found' });
     }
     return next();
   };

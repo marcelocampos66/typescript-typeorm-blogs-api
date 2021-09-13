@@ -37,12 +37,15 @@ class Helpers {
     }).validate(postInfos)
   );
 
-  public postStructure = (id: number, infos: IPost) => ({
-    ...infos,
-    userId: id,
-    published: new Date().toLocaleString(),
-    updated: new Date().toLocaleString(),
-  });
+  public postStructure = (id: number, infos: IPost) => {
+    const { categoryIds, ...otherInfos } = infos;
+    return ({
+      ...otherInfos,
+      userId: id,
+      published: new Date(),
+      updated: new Date(),
+    });
+  };
 
 }
 

@@ -7,11 +7,12 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  JoinColumn,
 } from "typeorm";
 import { User } from "./User";
 import { Category } from "./Category";
 
-@Entity('blogposts')
+@Entity()
 export class BlogPost {
 
   @PrimaryGeneratedColumn()
@@ -23,17 +24,21 @@ export class BlogPost {
   @Column()
   content: string;
 
-  @ManyToOne(() => User, (userId: User) => userId.id)
+  // @ManyToOne(() => User, (user: User) => user.id)
+  @ManyToOne(() => User)
+  @JoinColumn({ name: "userId", referencedColumnName: "id" })
   userId: User;
 
-  @CreateDateColumn({ name: 'published' })
+  @CreateDateColumn()
   published: Date;
 
-  @UpdateDateColumn({ name: 'updated' })
+  @UpdateDateColumn()
   updated: Date;
 
-  @ManyToMany(() => Category)
-  @JoinTable()
+  @ManyToMany(() => Category, (category: Category) => category.id, {
+    cascade: true,
+  })
+  // @JoinTable()
   categories: Array<Category>;
 
 }
