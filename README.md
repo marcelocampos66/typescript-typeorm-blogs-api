@@ -9,4 +9,4 @@
 [![Generic badge](https://img.shields.io/badge/Develop-MSC-violet?style=for-the-badge&logo=appveyor)](https://shields.io/)
 [![Generic badge](https://img.shields.io/badge/Develop-POO-pink?style=for-the-badge&logo=appveyor)](https://shields.io/)
  
-<h3>Uma API desenvolvida em TypeScript utilizando os padrões REST, arquitetura MSC e que realiza operações de CRUD em um banco de dados MongoDB com duas collections, uma de Products e outra de Sales.</h3>
+<h3>Uma API desenvolvida em Node, TypeScript e Express, utilizando os padrões REST, arquitetura MSC e que realiza operações de CRUD em um banco de dados relacional MySQL, através do ORM TypeORM. O banco de dados é formado com por quatro tabelas que possuem relacionamentos 1:N, N:1 e N:N, sendo uma delas, uma tabela de junção.</h3>
