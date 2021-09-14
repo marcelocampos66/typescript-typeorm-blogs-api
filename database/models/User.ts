@@ -1,7 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  JoinColumn,
+} from "typeorm";
 import { BlogPost } from "./BlogPost";
 
-@Entity('users')
+@Entity()
 export class User {
 
   @PrimaryGeneratedColumn()
@@ -16,7 +21,8 @@ export class User {
   @Column()
   password: string;
 
-  @OneToMany(() => BlogPost, (post: BlogPost) => post.userId)
+  @OneToMany(() => BlogPost, (posts: BlogPost) => posts.user)
+  @JoinColumn({ name: "posts", referencedColumnName: "user" })
   posts: Array<BlogPost>;
 
 }

@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import errorMiddleware from '../middlewares/errorMiddleware';
-import { IControllers } from '../Type';
+import { IControllers } from '../@Types/Type';
 
 class App {
   public app: express.Application;
@@ -27,6 +27,7 @@ class App {
   private callRouters() {
     this.app.use('/users', this.controllers.UsersController.router);
     this.app.use('/categories', this.controllers.CategoriesController.router);
+    this.app.use('/posts', this.controllers.BlogPostsController.router);
   }
 
   private handleErrors() {

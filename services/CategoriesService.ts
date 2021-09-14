@@ -1,14 +1,8 @@
 import { getRepository } from "typeorm";
-import Helpers from "../utils/Helpers";
 import { Category } from "../database/models/Category";
-import { ICategory } from "../Type";
+import { ICategory } from "../@Types/Type";
 
 export class CategoriesServices {
-  private helpers: Helpers;
-
-  constructor() {
-    this.helpers = new Helpers();
-  }
 
   public async registerCategory({ name }: ICategory) {
     const categoryRepository = getRepository(Category);

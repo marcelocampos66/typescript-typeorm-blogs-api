@@ -1,6 +1,7 @@
 import joi from 'joi';
 import md5 from 'md5';
-import { IUser, ICredentials, ICategory } from '../Type';
+import { Category } from '../database/models/Category';
+import { IUser, ICredentials, ICategory, IPost } from '../@Types/Type';
 
 class Helpers {
 
@@ -28,6 +29,29 @@ class Helpers {
       name: joi.string().min(3).required(),
     }).validate(infos)
   );
+
+  public verifyPostInfosJoi = (postInfos: IPost) => (
+    joi.object({
+      title: joi.string().required(),
+      content: joi.string().required(),
+      categoryIds: joi.array().required(),
+    }).validate(postInfos)
+  );
+
+  public postStructure = (
+    id: number,
+    infos: IPost,
+    postCategories: Array<Category>,
+  ) => {
+    const { categoryIds, ...otherInfos } = infos;
+    return ({
+      ...otherInfos,
+      user: id,
+      published: new Date(),
+      updated: new Date(),
+      categories: postCategories,
+    });
+  };
 
 }
 
