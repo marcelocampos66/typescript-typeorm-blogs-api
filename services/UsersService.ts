@@ -3,18 +3,14 @@ import jwt from 'jsonwebtoken';
 import { getRepository } from "typeorm";
 import Helpers from '../utils/Helpers';
 import { User } from "../database/models/User";
-import { ICredentials, IUser } from "../Type";
+import { ICredentials, IUser } from "../@Types/Type";
 
 export class UsersService {
-  // public manager: typeorm.Connection;s
-  // public userRepository: typeorm.Repository<User>;
   private secret: jwt.Secret;
   private jwtConfig: jwt.SignOptions;
   private helpers: Helpers;
 
   constructor() {
-    // this.manager = getConnectionManager().get();
-    // this.userRepository = this.manager.getRepository(User);
     this.secret = process.env.JWT_SECRET as string;
     this.jwtConfig = { expiresIn: '1d', algorithm: 'HS256' };
     this.helpers = new Helpers();

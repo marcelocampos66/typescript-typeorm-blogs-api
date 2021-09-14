@@ -24,7 +24,6 @@ export class BlogPost {
   @Column()
   content: string;
 
-  // @ManyToOne(() => User, (user: User) => user.id)
   @ManyToOne(() => User)
   @JoinColumn({ name: "user", referencedColumnName: "id" })
   user: User;

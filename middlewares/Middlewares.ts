@@ -5,7 +5,7 @@ import Helpers from '../utils/Helpers';
 import { User } from '../database/models/User';
 import { Category } from '../database/models/Category';
 import { BlogPost } from '../database/models/BlogPost';
-import { ITokenPayload } from '../Type';
+import { ITokenPayload } from '../@Types/Type';
 
 class Middlewares {
   private helpers: Helpers;

@@ -1,7 +1,7 @@
 import joi from 'joi';
 import md5 from 'md5';
 import { Category } from '../database/models/Category';
-import { IUser, ICredentials, ICategory, IPost } from '../Type';
+import { IUser, ICredentials, ICategory, IPost } from '../@Types/Type';
 
 class Helpers {
 

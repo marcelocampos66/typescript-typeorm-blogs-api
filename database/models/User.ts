@@ -2,7 +2,6 @@ import { Entity,
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-  JoinTable,
   JoinColumn,
 } from "typeorm";
 import { BlogPost } from "./BlogPost";

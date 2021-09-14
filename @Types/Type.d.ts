@@ -1,9 +1,9 @@
-import UsersController from './controllers/UsersController';
-import CategoriesController from './controllers/CategoriesController';
-import BlogPostsController from './controllers/BlogPostsController';
-import { UsersService } from './services/UsersService';
-import { CategoriesServices } from './services/CategoriesService';
-import { BlogPostsService } from './services/BlogPostsService';
+import UsersController from '../controllers/UsersController';
+import CategoriesController from '../controllers/CategoriesController';
+import BlogPostsController from '../controllers/BlogPostsController';
+import { UsersService } from '../services/UsersService';
+import { CategoriesServices } from '../services/CategoriesService';
+import { BlogPostsService } from '../services/BlogPostsService';
 
 interface IControllers {
   UsersController: UsersController;

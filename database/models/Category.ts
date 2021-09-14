@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
 import { BlogPost } from "./BlogPost";
 
-// @Entity('categories')
 @Entity()
 export class Category {
 

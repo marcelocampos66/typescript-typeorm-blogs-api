@@ -2,7 +2,7 @@ import { getRepository } from "typeorm";
 import Helpers from '../utils/Helpers';
 import { BlogPost } from "../database/models/BlogPost";
 import { Category } from "../database/models/Category";
-import { IPost, IPostWithoutCategoryIds } from "../Type";
+import { IPost, IPostWithoutCategoryIds } from "../@Types/Type";
 
 export class BlogPostsService {
   private helpers: Helpers

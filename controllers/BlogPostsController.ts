@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import Middlewares from '../middlewares/Middlewares';
-import { TBlogPostsService } from '../Type';
+import { TBlogPostsService } from '../@Types/Type';
 
 class BlogPostsController extends Middlewares {
   public router: express.Router;

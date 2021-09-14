@@ -1,6 +1,6 @@
 import { getRepository } from "typeorm";
 import { Category } from "../database/models/Category";
-import { ICategory } from "../Type";
+import { ICategory } from "../@Types/Type";
 
 export class CategoriesServices {
 
